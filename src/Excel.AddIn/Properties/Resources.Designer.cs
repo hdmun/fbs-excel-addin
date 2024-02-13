@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FlatbufferSerializer.Properties {
+namespace Excel.AddIn.Properties {
     
     
     /// <summary>

@@ -7,7 +7,7 @@ using Excel = Microsoft.Office.Interop.Excel;
 using Office = Microsoft.Office.Core;
 using Microsoft.Office.Tools.Excel;
 
-namespace FlatbufferSerializer
+namespace Excel.AddIn
 {
     public partial class ThisAddIn
     {
