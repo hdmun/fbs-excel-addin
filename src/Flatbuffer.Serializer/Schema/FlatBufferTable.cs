@@ -40,7 +40,8 @@ namespace Flatbuffer.Serializer.Schema
             return invalidFields.Count > 0;
         }
 
-        public string ToSchemaText()
+        // row 하나에 대한 schema 정의
+        public string ToSchemaItem()
         {
             var text = new StringBuilder();
 
@@ -49,13 +50,32 @@ namespace Flatbuffer.Serializer.Schema
                 text.AppendLine($"namespace {_namespace};");
             }
 
-            text.AppendLine($"table {_name} {{");
+            text.AppendLine($"table {_name}_item {{");
 
             foreach (var field in _fields)
             {
                 text.AppendLine($"  {field.Name}: {field.Type};");
             }
 
+            text.AppendLine("}");
+
+            return text.ToString();
+        }
+
+        // row 를 감싸는 schema 정의
+        public string ToSchemaTable()
+        {
+            var text = new StringBuilder();
+
+            text.AppendLine($"include \"{_name}_item.fbs\";");
+
+            if (false == string.IsNullOrEmpty(_namespace))
+            {
+                text.AppendLine($"namespace {_namespace};");
+            }
+
+            text.AppendLine($"table {_name} {{");
+            text.AppendLine($"  items : [{_name}_item];");
             text.AppendLine("}");
 
             return text.ToString();

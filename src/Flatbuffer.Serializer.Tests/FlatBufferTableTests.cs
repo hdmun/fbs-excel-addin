@@ -37,7 +37,7 @@ namespace Flatbuffer.Serializer.Tests
             var validate = flatBuffTable.Validate();
             Assert.IsTrue(validate);
 
-            var schemText = flatBuffTable.ToSchemaText();
+            var schemText = flatBuffTable.ToSchemaItem();
             var contain = schemText.Contains("test1: int;");
             Assert.IsTrue(contain);
 
