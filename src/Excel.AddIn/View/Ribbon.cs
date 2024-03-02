@@ -20,6 +20,8 @@ namespace Excel.AddIn
 
             var writer = new SchemaWriter();
             writer.Write(flatbuffTable);
+
+            reader.ReadAll();
         }
     }
 }
