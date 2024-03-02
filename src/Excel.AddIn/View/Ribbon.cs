@@ -1,10 +1,5 @@
-﻿using Excel.AddIn.Compile;
-using Microsoft.Office.Interop.Excel;
+﻿using Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Tools.Ribbon;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Excel.AddIn
 {
@@ -21,7 +16,10 @@ namespace Excel.AddIn
             var worksheet = workbook.ActiveSheet as Worksheet;
 
             var reader = new SchemaReader(worksheet);
-            reader.Read();
+            var flatbuffTable = reader.ReadColumns();
+
+            var writer = new SchemaWriter();
+            writer.Write(flatbuffTable);
         }
     }
 }

@@ -180,6 +180,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="SchemaReader.cs" />
+    <Compile Include="SchemaWriter.cs" />
     <Compile Include="View\Ribbon.cs">
       <SubType>Component</SubType>
     </Compile>

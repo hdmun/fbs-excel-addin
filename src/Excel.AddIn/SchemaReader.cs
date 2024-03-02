@@ -2,27 +2,27 @@
 using Microsoft.Office.Interop.Excel;
 using System;
 
-namespace Excel.AddIn.Compile
+namespace Excel.AddIn
 {
     public class SchemaReader
     {
         private readonly Worksheet _worksheet;
-        private readonly FlatBufferTable _flatBufferTable;
 
         public SchemaReader(Worksheet worksheet)
         {
             _worksheet = worksheet;
-            _flatBufferTable = new FlatBufferTable();
         }
 
-        public bool Read()
+        public FlatBufferTable ReadColumns()
         {
             // find headear signature
             var header = _worksheet.Cells.Find("#scheme");
             if (header is null)
             {
-                return false;
+                return null;
             }
+
+            var flatBufferTable = new FlatBufferTable(_worksheet.Name);
 
             var rowNum = header.Row;
             var columnNum = header.Column;
@@ -41,15 +41,10 @@ namespace Excel.AddIn.Compile
                 if (split.Length != 2)
                     continue; // error
 
-                _flatBufferTable.Add(name: split[0], type: split[1]);
+                flatBufferTable.Add(name: split[0], type: split[1]);
             }
 
-            return true;
-        }
-
-        public bool Validate()
-        {
-            return _flatBufferTable.Validate();
+            return flatBufferTable;
         }
     }
 }

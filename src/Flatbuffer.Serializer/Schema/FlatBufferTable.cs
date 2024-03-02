@@ -1,19 +1,27 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 
 namespace Flatbuffer.Serializer.Schema
 {
     public class FlatBufferTable
     {
-        private List<FlatBufferTableField> _fields;
+        private string _name;
+        private readonly string _namespace;
+        private readonly List<FlatBufferTableField> _fields;
 
-        public FlatBufferTable()
+        public string Name => _name;
+
+        public FlatBufferTable(string name)
         {
+            _name = name;
             _fields = new List<FlatBufferTableField>();
         }
 
         public void Add(string name, string type)
         {
             var field = FlatBufferTableField.Create(name, type);
+
+            // TODO : 같은 이름을 쓸 경우 array 로 사용할 수 있게
             _fields.Add(field);
         }
 
@@ -30,6 +38,27 @@ namespace Flatbuffer.Serializer.Schema
             // show message ?
 
             return invalidFields.Count > 0;
+        }
+
+        public string ToSchemaText()
+        {
+            var text = new StringBuilder();
+
+            if (false == string.IsNullOrEmpty(_namespace))
+            {
+                text.AppendLine($"namespace {_namespace};");
+            }
+
+            text.AppendLine($"table {_name} {{");
+
+            foreach (var field in _fields)
+            {
+                text.AppendLine($"  {field.Name}: {field.Type};");
+            }
+
+            text.AppendLine("}");
+
+            return text.ToString();
         }
     }
 }
