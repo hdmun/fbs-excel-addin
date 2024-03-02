@@ -5,6 +5,10 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Excel.AddIn", "Excel.AddIn\Excel.AddIn.csproj", "{7F4C1939-BC2D-4271-8856-0F55D13EBDA3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flatbuffer.Serializer.Tests", "Flatbuffer.Serializer.Tests\Flatbuffer.Serializer.Tests.csproj", "{9EAFDC31-EF53-4DAE-A9C4-1B8DA9B9EEF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flatbuffer.Serializer", "Flatbuffer.Serializer\Flatbuffer.Serializer.csproj", "{AF6AEC82-9857-4611-AFBA-7E64647E75E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{7F4C1939-BC2D-4271-8856-0F55D13EBDA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7F4C1939-BC2D-4271-8856-0F55D13EBDA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7F4C1939-BC2D-4271-8856-0F55D13EBDA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9EAFDC31-EF53-4DAE-A9C4-1B8DA9B9EEF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9EAFDC31-EF53-4DAE-A9C4-1B8DA9B9EEF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9EAFDC31-EF53-4DAE-A9C4-1B8DA9B9EEF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9EAFDC31-EF53-4DAE-A9C4-1B8DA9B9EEF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF6AEC82-9857-4611-AFBA-7E64647E75E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF6AEC82-9857-4611-AFBA-7E64647E75E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF6AEC82-9857-4611-AFBA-7E64647E75E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF6AEC82-9857-4611-AFBA-7E64647E75E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
