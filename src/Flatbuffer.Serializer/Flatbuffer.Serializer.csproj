@@ -46,5 +46,10 @@
     <Compile Include="Schema\FlatBufferTableField.cs" />
     <Compile Include="Schema\FlatBufferTypeChecker.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="flatc.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
