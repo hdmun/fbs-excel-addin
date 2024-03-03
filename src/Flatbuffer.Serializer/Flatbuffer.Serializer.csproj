@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RuntimeCompiler.cs" />
+    <Compile Include="Schema\FlatBufferTableRow.cs" />
     <Compile Include="Schema\FlatBufferTable.cs" />
     <Compile Include="Schema\FlatBufferTableField.cs" />
     <Compile Include="Schema\FlatBufferTypeChecker.cs" />

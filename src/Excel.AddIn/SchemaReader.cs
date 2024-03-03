@@ -49,16 +49,16 @@ namespace Excel.AddIn
             return flatBufferTable;
         }
 
-        public void ReadAll()
+        public List<FlatBufferTableRow> ReadAll()
         {
             // find headear signature
             var header = _worksheet.Cells.Find("#scheme");
             if (header is null)
             {
-                return;
+                return null;
             }
 
-            var rows = new List<List<string>>();
+            var rows = new List<FlatBufferTableRow>();
 
             // 맨앞 열의 행이 빈칸이 나올 때 까지 데이터를 읽는다
             var startRow = header.Row + 1;
@@ -66,31 +66,30 @@ namespace Excel.AddIn
             var headers = _worksheet.UsedRange.Rows[startRow, Type.Missing].Columns;
             for (int row = startRow; true; row++)
             {
-                List<string> values = ReadRowInternal(row, startColumn, headers.Count);
+                var tableRow = ReadRowInternal(row, startColumn, headers.Count);
 
                 // 비어있는 행이면 읽기 중단
-                var valid = values.Any(x => false == string.IsNullOrEmpty(x));
-                if (false == valid)
+                if (tableRow.IsEmpty())
                     break;
 
-                rows.Add(values);
+                rows.Add(tableRow);
             }
 
-            // 직렬화
+            return rows;
         }
 
-        private List<string> ReadRowInternal(int row, int col, int colCount)
+        private FlatBufferTableRow ReadRowInternal(int row, int col, int colCount)
         {
-            var columns = new List<string>();
+            var tableRow = new FlatBufferTableRow();
             // 컬럼을 증가시키면서 셀 데이터 읽기
             foreach (var column in Enumerable.Range(col, colCount))
             {
                 var cell = _worksheet.Cells[row, column];
                 var cellValue = cell.Value2 as string;
-                columns.Add(cellValue);
+                tableRow.Add(cellValue);
             }
 
-            return columns;
+            return tableRow;
         }
 
         private bool IsValidRow(int row, int col, int colCount)
