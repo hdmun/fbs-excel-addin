@@ -38,10 +38,9 @@ namespace Flatbuffer.Serializer.Tests
             // 컴파일
             File.Copy("Google.FlatBuffers.dll", $@"{Path.Combine(tempPath, "Google.FlatBuffers.dll")}", overwrite: true);
             var compiler = new RuntimeCompiler();
-            var itemType = compiler.Compile(new string[] { $"{itemPath}.cs" }, $"{name}_item");
+            var files = new string[] { $"{itemPath}.cs", $"{tablePath}.cs" };
+            var (itemType, tableType) = compiler.Compile(files, $"{name}", $"{name}_item");
             Assert.IsNotNull(itemType);
-
-            var tableType = compiler.Compile(new string[] { $"{itemPath}.cs", $"{tablePath}.cs" }, $"{name}");
             Assert.IsNotNull(tableType);
 
             // 클래스 인스턴스 생성
@@ -55,7 +54,7 @@ namespace Flatbuffer.Serializer.Tests
                 .Select(x => x.Name.Replace("Add", "").ToLower())
                 .ToList();
 
-            var serializer = new Serializer(tableType);
+            var serializer = new Serializer(tableType, tableType);
             serializer.WriteTest();
 
             // 직렬화 대상 데이터 세팅

@@ -1,28 +1,21 @@
 ﻿using Google.FlatBuffers;
-using Microsoft.CSharp;
 using System;
-using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Flatbuffer.Serializer
 {
     public class Serializer
     {
-        private readonly FlatBufferBuilder _builder;
-        private readonly Type _fbClassType;
-        private readonly object _fbClassInstance;
+        private readonly Type _fbTableClassType;
+        private readonly Type _fbItemClassType;
 
-        public Serializer(Type fbClassType)
+        public Serializer(Type fbTableClassType, Type fbItemClassType)
         {
-            _builder = new FlatBufferBuilder(1);
-            _fbClassType = fbClassType;
-            // 클래스 인스턴스 생성
-            _fbClassInstance = Activator.CreateInstance(fbClassType);
+            _fbTableClassType = fbTableClassType;
+            _fbItemClassType = fbItemClassType;
         }
 
         public void WriteTest()
@@ -72,7 +65,7 @@ namespace Flatbuffer.Serializer
             }
 
             // 메서드 호출하여 확인
-            var fieldMethods = _fbClassType
+            var fieldMethods = _fbTableClassType
                 .GetMethods(BindingFlags.Public | BindingFlags.Static)
                 .Where(x => x.Name.Contains("Add"))
                 .Select(x => x.Name.Replace("Add", "").ToLower())
