@@ -49,7 +49,7 @@ namespace Excel.AddIn
             return flatBufferTable;
         }
 
-        public List<FlatBufferTableRow> ReadAll()
+        public List<FlatBufferTableRow> ReadRowAll()
         {
             // find headear signature
             var header = _worksheet.Cells.Find("#scheme");

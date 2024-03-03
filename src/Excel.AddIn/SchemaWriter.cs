@@ -4,13 +4,9 @@ using System.IO;
 
 namespace Excel.AddIn
 {
-    public class SchemaWriter
+    public static class SchemaWriter
     {
-        public SchemaWriter()
-        {
-        }
-
-        public void Write(FlatBufferTable table)
+        public static void Write(FlatBufferTable table)
         {
             var path = $"{table.Name}_item.fbs";
             File.WriteAllText(path, table.ToSchemaItem());

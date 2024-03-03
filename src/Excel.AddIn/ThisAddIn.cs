@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
-using Excel = Microsoft.Office.Interop.Excel;
-using Office = Microsoft.Office.Core;
-using Microsoft.Office.Tools.Excel;
+﻿using Microsoft.Office.Interop.Excel;
+using System;
+using System.Windows.Forms;
 
 namespace Excel.AddIn
 {
@@ -13,10 +8,30 @@ namespace Excel.AddIn
     {
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
+            Application.WorkbookBeforeSave += Application_WorkbookBeforeSave;
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
         {
+        }
+
+        private void Application_WorkbookBeforeSave(Workbook workbook, bool saveAsUI, ref bool cancel)
+        {
+            // 엑셀 문서가 저장되기 전에 실행되는 코드
+            // 여기에 원하는 작업을 추가할 수 있습니다.
+            // 예: 특정 데이터 검증, 추가 정보 입력 등
+
+            var worksheet = workbook.ActiveSheet as Worksheet;
+
+            var reader = new SchemaReader(worksheet);
+
+            // 테이블 스키마 정보 읽기
+            var flatbuffTable = reader.ReadColumns();
+
+            // 전체 행 데이터 읽기
+            var tableRows = reader.ReadRowAll();
+
+            // TODO : 직렬화
         }
 
         #region VSTO에서 생성한 코드

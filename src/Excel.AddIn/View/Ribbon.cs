@@ -16,12 +16,11 @@ namespace Excel.AddIn
             var worksheet = workbook.ActiveSheet as Worksheet;
 
             var reader = new SchemaReader(worksheet);
+            // 테이블 스키마 정보 읽기
             var flatbuffTable = reader.ReadColumns();
 
-            var writer = new SchemaWriter();
-            writer.Write(flatbuffTable);
-
-            reader.ReadAll();
+            // 플랫버퍼 스키마 파일 만들고 클래스 파일 생성
+            SchemaWriter.Write(flatbuffTable);
         }
     }
 }
