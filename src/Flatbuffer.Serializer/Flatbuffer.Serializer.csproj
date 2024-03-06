@@ -51,8 +51,6 @@
     <Compile Include="Schema\FlatBufferTableField.cs" />
     <Compile Include="Schema\FlatBufferTypeConverter.cs" />
     <Compile Include="Serializer.cs" />
-    <Compile Include="Sheet1.cs" />
-    <Compile Include="Sheet1_item.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="flatc.exe">
