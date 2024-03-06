@@ -63,10 +63,11 @@ namespace Excel.AddIn
             // 맨앞 열의 행이 빈칸이 나올 때 까지 데이터를 읽는다
             var startRow = header.Row + 1;
             var startColumn = header.Column;
-            var headers = _worksheet.UsedRange.Rows[startRow, Type.Missing].Columns;
+            Range headers = _worksheet.UsedRange.Rows[header.Row, Type.Missing];
+            int columnCount = headers.Columns.Count;
             for (int row = startRow; true; row++)
             {
-                var tableRow = ReadRowInternal(row, startColumn, headers.Count);
+                var tableRow = ReadRowInternal(headers, row, startColumn, columnCount);
 
                 // 비어있는 행이면 읽기 중단
                 if (tableRow.IsEmpty())
@@ -78,7 +79,7 @@ namespace Excel.AddIn
             return rows;
         }
 
-        private FlatBufferTableRow ReadRowInternal(int row, int col, int colCount)
+        private FlatBufferTableRow ReadRowInternal(Range headers, int row, int col, int colCount)
         {
             var tableRow = new FlatBufferTableRow();
             // 컬럼을 증가시키면서 셀 데이터 읽기
@@ -86,7 +87,8 @@ namespace Excel.AddIn
             {
                 var cell = _worksheet.Cells[row, column];
                 var cellValue = cell.Value2 as string;
-                tableRow.Add(cellValue);
+
+                tableRow.Add("", cellValue);
             }
 
             return tableRow;

@@ -49,7 +49,7 @@
     <Compile Include="Schema\FlatBufferTableRow.cs" />
     <Compile Include="Schema\FlatBufferTable.cs" />
     <Compile Include="Schema\FlatBufferTableField.cs" />
-    <Compile Include="Schema\FlatBufferTypeChecker.cs" />
+    <Compile Include="Schema\FlatBufferTypeConverter.cs" />
     <Compile Include="Serializer.cs" />
     <Compile Include="Sheet1.cs" />
     <Compile Include="Sheet1_item.cs" />

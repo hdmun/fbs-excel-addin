@@ -8,7 +8,6 @@ namespace Flatbuffer.Serializer.Schema
         private string _name;
         private readonly string _namespace;
         private readonly List<FlatBufferTableField> _fields;
-        private readonly List<FlatBufferTableRow> _rows;
 
         public string Name => _name;
 
@@ -16,7 +15,6 @@ namespace Flatbuffer.Serializer.Schema
         {
             _name = name;
             _fields = new List<FlatBufferTableField>();
-            _rows = new List<FlatBufferTableRow>();
         }
 
         public void Add(string name, string type)
@@ -32,7 +30,7 @@ namespace Flatbuffer.Serializer.Schema
             var invalidFields = new List<FlatBufferTableField>();
             foreach (var field in _fields)
             {
-                var validate = FlatBufferTypeChecker.Validate(field.Type);
+                var validate = FlatBufferTypeConverter.Validate(field.Type);
                 if (false == validate)
                     invalidFields.Add(field);
             }

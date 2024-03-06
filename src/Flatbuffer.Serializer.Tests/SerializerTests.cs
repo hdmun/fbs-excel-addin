@@ -1,10 +1,10 @@
 ﻿using Flatbuffer.Serializer.Schema;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 
 namespace Flatbuffer.Serializer.Tests
 {
@@ -39,29 +39,26 @@ namespace Flatbuffer.Serializer.Tests
             File.Copy("Google.FlatBuffers.dll", $@"{Path.Combine(tempPath, "Google.FlatBuffers.dll")}", overwrite: true);
             var compiler = new RuntimeCompiler();
             var files = new string[] { $"{itemPath}.cs", $"{tablePath}.cs" };
-            var (itemType, tableType) = compiler.Compile(files, $"{name}", $"{name}_item");
+            var (tableType, itemType) = compiler.Compile(files, $"{name}", $"{name}_item");
             Assert.IsNotNull(itemType);
             Assert.IsNotNull(tableType);
 
-            // 클래스 인스턴스 생성
-            var fbClassInstance = Activator.CreateInstance(itemType);
-            var method = itemType.GetMethod($"Create{name}_item");
+            // 직렬화할 테스트용 데이터 세팅
 
-            // 직렬화 대상 필드 확인
-            var fieldMethods = itemType
-                .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .Where(x => x.Name.Contains("Add"))
-                .Select(x => x.Name.Replace("Add", "").ToLower())
-                .ToList();
-
-            var serializer = new Serializer(tableType, tableType);
-            serializer.WriteTest();
-
-            // 직렬화 대상 데이터 세팅
+            var rows = new List<FlatBufferTableRow>();
+            foreach (var i in Enumerable.Range(1, 10))
+            {
+                var row = new FlatBufferTableRow();
+                row.Add("int", $"{i}");
+                row.Add("string", $"string - {i}");
+                rows.Add(row);
+            }
 
             // 컴파일된 클래스로 직렬화한 파일 출력
+            var serializer = new Serializer(tableType, itemType);
+            serializer.Serialize(rows.ToArray());
 
-            // 출력된 파일 다시 읽기 테스트
+            // TODO : 출력된 파일 다시 읽기 테스트
         }
     }
 }
