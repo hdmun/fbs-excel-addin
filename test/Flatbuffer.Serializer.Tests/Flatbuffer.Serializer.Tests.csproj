@@ -57,7 +57,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Flatbuffer.Serializer\Flatbuffer.Serializer.csproj">
+    <ProjectReference Include="..\..\src\Flatbuffer.Serializer\Flatbuffer.Serializer.csproj">
       <Project>{af6aec82-9857-4611-afba-7e64647e75e7}</Project>
       <Name>Flatbuffer.Serializer</Name>
     </ProjectReference>
