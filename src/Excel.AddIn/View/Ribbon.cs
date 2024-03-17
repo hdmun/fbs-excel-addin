@@ -26,7 +26,7 @@ namespace Excel.AddIn
 
         private void btnSettings_Click(object sender, RibbonControlEventArgs e)
         {
-            var form = new SettingForm();
+            var form = new SettingForm(Globals.ThisAddIn.ConfigViewModel);
             form.ShowDialog();
         }
     }

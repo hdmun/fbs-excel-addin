@@ -29,15 +29,11 @@
         private void InitializeComponent()
         {
             this.gbClassOutput = new System.Windows.Forms.GroupBox();
-            this.listViewClassOutput = new System.Windows.Forms.ListView();
-            this.colHeaderPath = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colHeaderEdit = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnClassOutputEdit = new System.Windows.Forms.Button();
+            this.btnClassOutputAdd = new System.Windows.Forms.Button();
             this.gbBinaryOutput = new System.Windows.Forms.GroupBox();
-            this.listViewBinaryOutput = new System.Windows.Forms.ListView();
-            this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnBinaryOutputEdit = new System.Windows.Forms.Button();
+            this.btnBinaryOutputAdd = new System.Windows.Forms.Button();
+            this.listBoxBinaryOutput = new System.Windows.Forms.ListBox();
+            this.listBoxClassOutput = new System.Windows.Forms.ListBox();
             this.gbClassOutput.SuspendLayout();
             this.gbBinaryOutput.SuspendLayout();
             this.SuspendLayout();
@@ -46,8 +42,8 @@
             // 
             this.gbClassOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbClassOutput.Controls.Add(this.listViewClassOutput);
-            this.gbClassOutput.Controls.Add(this.btnClassOutputEdit);
+            this.gbClassOutput.Controls.Add(this.listBoxClassOutput);
+            this.gbClassOutput.Controls.Add(this.btnClassOutputAdd);
             this.gbClassOutput.Location = new System.Drawing.Point(12, 13);
             this.gbClassOutput.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.gbClassOutput.Name = "gbClassOutput";
@@ -57,39 +53,24 @@
             this.gbClassOutput.TabStop = false;
             this.gbClassOutput.Text = "클래스 파일 출력 위치";
             // 
-            // listViewClassOutput
+            // btnClassOutputAdd
             // 
-            this.listViewClassOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.listViewClassOutput.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.colHeaderPath,
-            this.colHeaderEdit});
-            this.listViewClassOutput.HideSelection = false;
-            this.listViewClassOutput.Location = new System.Drawing.Point(6, 58);
-            this.listViewClassOutput.Name = "listViewClassOutput";
-            this.listViewClassOutput.Size = new System.Drawing.Size(779, 105);
-            this.listViewClassOutput.TabIndex = 2;
-            this.listViewClassOutput.UseCompatibleStateImageBehavior = false;
-            // 
-            // btnClassOutputEdit
-            // 
-            this.btnClassOutputEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnClassOutputEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnClassOutputEdit.Location = new System.Drawing.Point(710, 25);
-            this.btnClassOutputEdit.Name = "btnClassOutputEdit";
-            this.btnClassOutputEdit.Size = new System.Drawing.Size(75, 27);
-            this.btnClassOutputEdit.TabIndex = 1;
-            this.btnClassOutputEdit.Text = "수정";
-            this.btnClassOutputEdit.UseVisualStyleBackColor = true;
-            this.btnClassOutputEdit.Click += new System.EventHandler(this.btnClassOutputEdit_Click);
+            this.btnClassOutputAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnClassOutputAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnClassOutputAdd.Location = new System.Drawing.Point(710, 25);
+            this.btnClassOutputAdd.Name = "btnClassOutputAdd";
+            this.btnClassOutputAdd.Size = new System.Drawing.Size(75, 27);
+            this.btnClassOutputAdd.TabIndex = 1;
+            this.btnClassOutputAdd.Text = "추가";
+            this.btnClassOutputAdd.UseVisualStyleBackColor = true;
+            this.btnClassOutputAdd.Click += new System.EventHandler(this.btnClassOutputAdd_Click);
             // 
             // gbBinaryOutput
             // 
             this.gbBinaryOutput.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbBinaryOutput.Controls.Add(this.listViewBinaryOutput);
-            this.gbBinaryOutput.Controls.Add(this.btnBinaryOutputEdit);
+            this.gbBinaryOutput.Controls.Add(this.listBoxBinaryOutput);
+            this.gbBinaryOutput.Controls.Add(this.btnBinaryOutputAdd);
             this.gbBinaryOutput.Location = new System.Drawing.Point(18, 191);
             this.gbBinaryOutput.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.gbBinaryOutput.Name = "gbBinaryOutput";
@@ -99,32 +80,43 @@
             this.gbBinaryOutput.TabStop = false;
             this.gbBinaryOutput.Text = "바이너리 파일 출력 위치";
             // 
-            // listViewBinaryOutput
+            // btnBinaryOutputAdd
             // 
-            this.listViewBinaryOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.btnBinaryOutputAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnBinaryOutputAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBinaryOutputAdd.Location = new System.Drawing.Point(710, 25);
+            this.btnBinaryOutputAdd.Name = "btnBinaryOutputAdd";
+            this.btnBinaryOutputAdd.Size = new System.Drawing.Size(75, 27);
+            this.btnBinaryOutputAdd.TabIndex = 1;
+            this.btnBinaryOutputAdd.Text = "추가";
+            this.btnBinaryOutputAdd.UseVisualStyleBackColor = true;
+            this.btnBinaryOutputAdd.Click += new System.EventHandler(this.btnBinaryOutputAdd_Click);
+            // 
+            // listBoxBinaryOutput
+            // 
+            this.listBoxBinaryOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.listViewBinaryOutput.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader1,
-            this.columnHeader2});
-            this.listViewBinaryOutput.HideSelection = false;
-            this.listViewBinaryOutput.Location = new System.Drawing.Point(6, 58);
-            this.listViewBinaryOutput.Name = "listViewBinaryOutput";
-            this.listViewBinaryOutput.Size = new System.Drawing.Size(779, 105);
-            this.listViewBinaryOutput.TabIndex = 2;
-            this.listViewBinaryOutput.UseCompatibleStateImageBehavior = false;
+            this.listBoxBinaryOutput.FormattingEnabled = true;
+            this.listBoxBinaryOutput.ItemHeight = 15;
+            this.listBoxBinaryOutput.Location = new System.Drawing.Point(6, 60);
+            this.listBoxBinaryOutput.Name = "listBoxBinaryOutput";
+            this.listBoxBinaryOutput.Size = new System.Drawing.Size(773, 94);
+            this.listBoxBinaryOutput.TabIndex = 3;
+            this.listBoxBinaryOutput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBoxBinaryOutput_KeyDown);
             // 
-            // btnBinaryOutputEdit
+            // listBoxClassOutput
             // 
-            this.btnBinaryOutputEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBinaryOutputEdit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBinaryOutputEdit.Location = new System.Drawing.Point(710, 25);
-            this.btnBinaryOutputEdit.Name = "btnBinaryOutputEdit";
-            this.btnBinaryOutputEdit.Size = new System.Drawing.Size(75, 27);
-            this.btnBinaryOutputEdit.TabIndex = 1;
-            this.btnBinaryOutputEdit.Text = "수정";
-            this.btnBinaryOutputEdit.UseVisualStyleBackColor = true;
-            this.btnBinaryOutputEdit.Click += new System.EventHandler(this.btnBinaryOutputEdit_Click);
+            this.listBoxClassOutput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.listBoxClassOutput.FormattingEnabled = true;
+            this.listBoxClassOutput.ItemHeight = 15;
+            this.listBoxClassOutput.Location = new System.Drawing.Point(12, 58);
+            this.listBoxClassOutput.Name = "listBoxClassOutput";
+            this.listBoxClassOutput.Size = new System.Drawing.Size(773, 94);
+            this.listBoxClassOutput.TabIndex = 4;
+            this.listBoxClassOutput.KeyDown += new System.Windows.Forms.KeyEventHandler(this.listBoxClassOutput_KeyDown);
             // 
             // SettingForm
             // 
@@ -137,6 +129,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "SettingForm";
             this.Text = "Setting";
+            this.Load += new System.EventHandler(this.SettingForm_Load);
             this.gbClassOutput.ResumeLayout(false);
             this.gbBinaryOutput.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -146,14 +139,10 @@
         #endregion
 
         private System.Windows.Forms.GroupBox gbClassOutput;
-        private System.Windows.Forms.Button btnClassOutputEdit;
-        private System.Windows.Forms.ListView listViewClassOutput;
-        private System.Windows.Forms.ColumnHeader colHeaderPath;
-        private System.Windows.Forms.ColumnHeader colHeaderEdit;
+        private System.Windows.Forms.Button btnClassOutputAdd;
         private System.Windows.Forms.GroupBox gbBinaryOutput;
-        private System.Windows.Forms.ListView listViewBinaryOutput;
-        private System.Windows.Forms.ColumnHeader columnHeader1;
-        private System.Windows.Forms.ColumnHeader columnHeader2;
-        private System.Windows.Forms.Button btnBinaryOutputEdit;
+        private System.Windows.Forms.Button btnBinaryOutputAdd;
+        private System.Windows.Forms.ListBox listBoxBinaryOutput;
+        private System.Windows.Forms.ListBox listBoxClassOutput;
     }
 }

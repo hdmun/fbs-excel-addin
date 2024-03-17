@@ -1,4 +1,5 @@
-﻿using Microsoft.Office.Interop.Excel;
+﻿using Excel.AddIn.ViewModel;
+using Microsoft.Office.Interop.Excel;
 using System;
 using System.Windows.Forms;
 
@@ -6,6 +7,8 @@ namespace Excel.AddIn
 {
     public partial class ThisAddIn
     {
+        public ConfigViewModel ConfigViewModel { get; set; } = new ConfigViewModel();
+
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             Application.WorkbookBeforeSave += Application_WorkbookBeforeSave;
