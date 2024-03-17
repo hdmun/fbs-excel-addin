@@ -16,5 +16,15 @@ namespace Excel.AddIn.View
         {
             InitializeComponent();
         }
+
+        private void btnClassOutputEdit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBinaryOutputEdit_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

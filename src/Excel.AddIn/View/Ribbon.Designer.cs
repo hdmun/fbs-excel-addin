@@ -37,11 +37,13 @@
             this.tab1 = this.Factory.CreateRibbonTab();
             this.tab = this.Factory.CreateRibbonTab();
             this.groupSerialize = this.Factory.CreateRibbonGroup();
-            this.button1 = this.Factory.CreateRibbonButton();
+            this.btnCreateClassFile = this.Factory.CreateRibbonButton();
             this.groupSetting = this.Factory.CreateRibbonGroup();
+            this.btnSettings = this.Factory.CreateRibbonButton();
             this.tab1.SuspendLayout();
             this.tab.SuspendLayout();
             this.groupSerialize.SuspendLayout();
+            this.groupSetting.SuspendLayout();
             this.SuspendLayout();
             // 
             // tab1
@@ -59,22 +61,31 @@
             // 
             // groupSerialize
             // 
-            this.groupSerialize.Items.Add(this.button1);
+            this.groupSerialize.Items.Add(this.btnCreateClassFile);
             this.groupSerialize.Label = "Serialize";
             this.groupSerialize.Name = "groupSerialize";
             // 
-            // button1
+            // btnCreateClassFile
             // 
-            this.button1.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
-            this.button1.Label = "클래스 생성";
-            this.button1.Name = "button1";
-            this.button1.ShowImage = true;
-            this.button1.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.button_Click);
+            this.btnCreateClassFile.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnCreateClassFile.Label = "클래스 생성";
+            this.btnCreateClassFile.Name = "btnCreateClassFile";
+            this.btnCreateClassFile.ShowImage = true;
+            this.btnCreateClassFile.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnCreateClassFile_Click);
             // 
             // groupSetting
             // 
+            this.groupSetting.Items.Add(this.btnSettings);
             this.groupSetting.Label = "Settings";
             this.groupSetting.Name = "groupSetting";
+            // 
+            // btnSettings
+            // 
+            this.btnSettings.ControlSize = Microsoft.Office.Core.RibbonControlSize.RibbonControlSizeLarge;
+            this.btnSettings.Label = "설정";
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.ShowImage = true;
+            this.btnSettings.Click += new Microsoft.Office.Tools.Ribbon.RibbonControlEventHandler(this.btnSettings_Click);
             // 
             // Ribbon
             // 
@@ -89,6 +100,8 @@
             this.tab.PerformLayout();
             this.groupSerialize.ResumeLayout(false);
             this.groupSerialize.PerformLayout();
+            this.groupSetting.ResumeLayout(false);
+            this.groupSetting.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -99,7 +112,8 @@
         private Microsoft.Office.Tools.Ribbon.RibbonTab tab;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup groupSerialize;
         internal Microsoft.Office.Tools.Ribbon.RibbonGroup groupSetting;
-        internal Microsoft.Office.Tools.Ribbon.RibbonButton button1;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnCreateClassFile;
+        internal Microsoft.Office.Tools.Ribbon.RibbonButton btnSettings;
     }
 
     partial class ThisRibbonCollection

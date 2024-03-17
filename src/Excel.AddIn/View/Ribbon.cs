@@ -1,4 +1,5 @@
-﻿using Microsoft.Office.Interop.Excel;
+﻿using Excel.AddIn.View;
+using Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Tools.Ribbon;
 
 namespace Excel.AddIn
@@ -10,7 +11,7 @@ namespace Excel.AddIn
 
         }
 
-        private void button_Click(object sender, RibbonControlEventArgs e)
+        private void btnCreateClassFile_Click(object sender, RibbonControlEventArgs e)
         {
             var workbook = Globals.ThisAddIn.Application.ActiveWorkbook;
             var worksheet = workbook.ActiveSheet as Worksheet;
@@ -21,6 +22,12 @@ namespace Excel.AddIn
 
             // 플랫버퍼 스키마 파일 만들고 클래스 파일 생성
             SchemaWriter.Write(flatbuffTable);
+        }
+
+        private void btnSettings_Click(object sender, RibbonControlEventArgs e)
+        {
+            var form = new SettingForm();
+            form.ShowDialog();
         }
     }
 }
