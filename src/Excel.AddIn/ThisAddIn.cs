@@ -12,6 +12,8 @@ namespace Excel.AddIn
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             Application.WorkbookBeforeSave += Application_WorkbookBeforeSave;
+
+            ConfigViewModel.Load();
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)

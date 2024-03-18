@@ -1,14 +1,5 @@
 ﻿using Excel.AddIn.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Excel.AddIn.View
@@ -42,6 +33,8 @@ namespace Excel.AddIn.View
                         // ui refresh
                         listBoxClassOutput.DataSource = null;
                         listBoxClassOutput.DataSource = _viewModel.ClassOutputPaths;
+
+                        _viewModel.Save();
                     }
                 }
             }
@@ -60,6 +53,8 @@ namespace Excel.AddIn.View
                         // ui refresh
                         listBoxBinaryOutput.DataSource = null;
                         listBoxBinaryOutput.DataSource = _viewModel.BinaryOutputPaths;
+
+                        _viewModel.Save();
                     }
                 }
             }
@@ -78,6 +73,8 @@ namespace Excel.AddIn.View
                     listBoxClassOutput.DataSource = _viewModel.ClassOutputPaths;
                     if (_viewModel.ClassOutputPaths.Count > 0)
                         listBoxClassOutput.SelectedIndex = Math.Max(index - 1, 0);
+
+                    _viewModel.Save();
                 }
             }
         }
@@ -95,6 +92,8 @@ namespace Excel.AddIn.View
                     listBoxBinaryOutput.DataSource = _viewModel.BinaryOutputPaths;
                     if (_viewModel.BinaryOutputPaths.Count > 0)
                         listBoxBinaryOutput.SelectedIndex = Math.Max(index - 1, 0);
+
+                    _viewModel.Save();
                 }
             }
         }

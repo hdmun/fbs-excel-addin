@@ -1,22 +1,54 @@
-﻿using Excel.AddIn.Model;
+﻿using Excel.AddIn.Feature;
+using Excel.AddIn.Model;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Text;
+using System.IO;
+using System.Linq;
 
 namespace Excel.AddIn.ViewModel
 {
     public class ConfigViewModel
     {
-        [DllImport("kernel32.dll")]
-        public static extern long WritePrivateProfileString(string section, string key, string val, string filepath);
-
-        [DllImport("kernel32.dll")]
-        public static extern long GetPrivateProfileString(string section, string key, string def, StringBuilder retString, int size, string filepath);
+        private static readonly string FilePath = Path.Combine(Directory.GetCurrentDirectory(), "config.ini");
+        private readonly IniFile _iniFile = new IniFile();
 
         private readonly ConfigModel _model = new ConfigModel();
 
         public List<string> ClassOutputPaths => _model.ClassOutputPaths;
         public List<string> BinaryOutputPaths => _model.BinaryOutputPaths;
+
+        public void Load()
+        {
+            _iniFile.Load(FilePath);
+
+            if (_iniFile.TryGetSection("ClassOutput", out var section))
+            {
+                _model.ClassOutputPaths = section.Select(x => x.Value.ToString()).ToList();
+            }
+
+            if (_iniFile.TryGetSection("BinaryOutput", out section))
+            {
+                _model.BinaryOutputPaths = section.Select(x => x.Value.ToString()).ToList();
+            }
+        }
+
+        public void Save()
+        {
+            var section = new IniSection();
+            foreach (var (path, index) in _model.ClassOutputPaths.Select((x, i) => (x, i)))
+            {
+                section[$"{index}"] = path;
+            }
+            _iniFile["ClassOutput"] = section;
+
+            section = new IniSection();
+            foreach (var (path, index) in _model.BinaryOutputPaths.Select((x, i) => (x, i)))
+            {
+                section[$"{index}"] = path;
+            }
+            _iniFile["BinaryOutput"] = section;
+
+            _iniFile.Save(FilePath);
+        }
 
         public bool AddClassOutputPath(string path)
         {
