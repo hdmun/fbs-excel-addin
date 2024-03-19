@@ -20,7 +20,7 @@ namespace Flatbuffer.Serializer
             _fbItemClassType = fbItemClassType;
         }
 
-        public void Serialize(FlatBufferTableRow[] rows)
+        public void Serialize(IEnumerable<FlatBufferTableRow> rows)
         {
             // 직렬화에 사용할 메소드 가져오기
             var fieldMethods = _fbTableClassType

@@ -37,7 +37,7 @@ namespace Flatbuffer.Serializer.Schema
 
             // show message ?
 
-            return invalidFields.Count > 0;
+            return invalidFields.Count > 0 ? false : true;
         }
 
         // row 하나에 대한 schema 정의
@@ -50,7 +50,7 @@ namespace Flatbuffer.Serializer.Schema
                 text.AppendLine($"namespace {_namespace};");
             }
 
-            text.AppendLine($"struct {_name}_item {{");
+            text.AppendLine($"table {_name}_item {{");
 
             foreach (var field in _fields)
             {

@@ -25,15 +25,20 @@ namespace Flatbuffer.Serializer.Tests
 
             // 스키마 텍스트 파일로 출력
             var tempPath = Path.GetTempPath();
-            var itemPath = $@"{tempPath}\{name}_item";
+            var itemPath = Path.Combine(tempPath, $"{name}_item");
             File.WriteAllText($"{itemPath}.fbs", schemItemText);
 
-            var tablePath = $@"{tempPath}\{name}";
+            var tablePath = Path.Combine(tempPath, $"{name}");
             File.WriteAllText($"{tablePath}.fbs", schemTableText);
 
             // 클래스 파일 출력
-            Process.Start("flatc.exe", $" -o {tempPath} --csharp {itemPath}.fbs").WaitForExit();
-            Process.Start("flatc.exe", $" -o {tempPath} --csharp {tablePath}.fbs").WaitForExit();
+            var flatc = Process.Start("flatc.exe", $"--csharp {itemPath}.fbs");
+            flatc.WaitForExit();
+            Assert.AreEqual(0, flatc.ExitCode);
+
+            flatc = Process.Start("flatc.exe", $"--csharp {tablePath}.fbs");
+            flatc.WaitForExit();
+            Assert.AreEqual(0, flatc.ExitCode);
 
             // 컴파일
             File.Copy("Google.FlatBuffers.dll", $@"{Path.Combine(tempPath, "Google.FlatBuffers.dll")}", overwrite: true);

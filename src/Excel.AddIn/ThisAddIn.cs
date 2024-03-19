@@ -1,7 +1,9 @@
 ﻿using Excel.AddIn.ViewModel;
+using Flatbuffer.Serializer;
 using Microsoft.Office.Interop.Excel;
 using System;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace Excel.AddIn
 {
@@ -22,21 +24,28 @@ namespace Excel.AddIn
 
         private void Application_WorkbookBeforeSave(Workbook workbook, bool saveAsUI, ref bool cancel)
         {
-            // 엑셀 문서가 저장되기 전에 실행되는 코드
-            // 여기에 원하는 작업을 추가할 수 있습니다.
-            // 예: 특정 데이터 검증, 추가 정보 입력 등
-
             var worksheet = workbook.ActiveSheet as Worksheet;
 
+            var myPath = this.Application.Path;
             var reader = new SchemaReader(worksheet);
 
             // 테이블 스키마 정보 읽기
             var flatbuffTable = reader.ReadColumns();
 
+            // 플랫버퍼 스키마 파일 만들고 클래스 파일 생성
+            var (tablePath, itemPath) = SchemaWriter.Write(flatbuffTable);
+
+            // 직렬화를 위한 준비
+            var compiler = new RuntimeCompiler();
+            var files = new string[] { $"{itemPath}.cs", $"{tablePath}.cs" };
+            var (tableType, itemType) = compiler.Compile(files, $"{flatbuffTable.Name}", $"{flatbuffTable.Name}_item");
+
             // 전체 행 데이터 읽기
             var tableRows = reader.ReadRowAll();
 
-            // TODO : 직렬화
+            // 직렬화
+            var serializer = new Serializer(tableType, itemType);
+            serializer.Serialize(tableRows.ToArray());
         }
 
         #region VSTO에서 생성한 코드
