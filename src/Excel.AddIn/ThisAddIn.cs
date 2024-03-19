@@ -33,7 +33,7 @@ namespace Excel.AddIn
             var flatbuffTable = reader.ReadColumns();
 
             // 플랫버퍼 스키마 파일 만들고 클래스 파일 생성
-            var (tablePath, itemPath) = SchemaWriter.Write(flatbuffTable);
+            var (tablePath, itemPath) = SchemaWriter.Write(flatbuffTable, CompileLanguage.csharp);
 
             // 직렬화를 위한 준비
             var compiler = new RuntimeCompiler();

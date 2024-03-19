@@ -1,4 +1,5 @@
 ﻿using Excel.AddIn.View;
+using Flatbuffer.Serializer;
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Tools.Ribbon;
 
@@ -21,7 +22,8 @@ namespace Excel.AddIn
             var flatbuffTable = reader.ReadColumns();
 
             // 플랫버퍼 스키마 파일 만들고 클래스 파일 생성
-            SchemaWriter.Write(flatbuffTable);
+            // TODO : 환경 설정에서 옵션 설정할 수 있게 하자
+            SchemaWriter.Write(flatbuffTable, CompileLanguage.csharp);
         }
 
         private void btnSettings_Click(object sender, RibbonControlEventArgs e)
