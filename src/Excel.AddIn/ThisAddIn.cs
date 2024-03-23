@@ -2,6 +2,9 @@
 using Flatbuffer.Serializer;
 using Microsoft.Office.Interop.Excel;
 using System;
+using System.IO;
+using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Xml.Linq;
 
@@ -36,19 +39,31 @@ namespace Excel.AddIn
         {
             var worksheet = workbook.ActiveSheet as Worksheet;
 
-            var myPath = this.Application.Path;
             var reader = new SchemaReader(worksheet);
 
             // 테이블 스키마 정보 읽기
             var flatbuffTable = reader.ReadColumns();
 
-            // 플랫버퍼 스키마 파일 만들고 클래스 파일 생성
-            var (tablePath, itemPath) = SchemaWriter.Write(flatbuffTable, CompileLanguage.csharp);
+            // 임시 폴더에 플랫버퍼 스키마 파일 만들고 클래스 파일 생성
+            var tempPath = Path.GetTempPath();
+            var writer = new SchemaWriter()
+            {
+                WorkingDirectory = MyLocation,
+                OutputDirectory = tempPath,
+            };
+            var (tablePath, itemPath) = writer.Write(flatbuffTable, CompileLanguage.csharp);
 
             // 직렬화를 위한 준비
-            var compiler = new RuntimeCompiler();
-            var files = new string[] { $"{itemPath}.cs", $"{tablePath}.cs" };
-            var (tableType, itemType) = compiler.Compile(files, $"{flatbuffTable.Name}", $"{flatbuffTable.Name}_item");
+            var compiler = new RuntimeCompiler(MyLocation);
+            var files = new string[]
+            {
+                $"{itemPath}.cs",
+                $"{tablePath}.cs",
+            };
+            compiler.Compile(files);
+
+            var tableType = compiler.GetType(flatbuffTable.Name);
+            var itemType = compiler.GetType($"{flatbuffTable.Name}_item");
 
             // 전체 행 데이터 읽기
             var tableRows = reader.ReadRowAll();

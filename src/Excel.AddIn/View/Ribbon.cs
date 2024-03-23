@@ -2,6 +2,7 @@
 using Flatbuffer.Serializer;
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Tools.Ribbon;
+using System.IO;
 
 namespace Excel.AddIn
 {
@@ -23,7 +24,12 @@ namespace Excel.AddIn
 
             // 플랫버퍼 스키마 파일 만들고 클래스 파일 생성
             // TODO : 환경 설정에서 옵션 설정할 수 있게 하자
-            SchemaWriter.Write(flatbuffTable, CompileLanguage.csharp);
+            var writer = new SchemaWriter()
+            {
+                WorkingDirectory = Globals.ThisAddIn.MyLocation,
+                OutputDirectory = Path.GetTempPath()
+            };
+            writer.Write(flatbuffTable, CompileLanguage.csharp);
         }
 
         private void btnSettings_Click(object sender, RibbonControlEventArgs e)

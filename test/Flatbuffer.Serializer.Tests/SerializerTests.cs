@@ -32,19 +32,28 @@ namespace Flatbuffer.Serializer.Tests
             File.WriteAllText($"{tablePath}.fbs", schemTableText);
 
             // 클래스 파일 출력
-            var flatc = Process.Start("flatc.exe", $"--csharp {itemPath}.fbs");
+            var flatc = Process.Start("flatc.exe", $"-o {tempPath} --csharp {itemPath}.fbs");
             flatc.WaitForExit();
             Assert.AreEqual(0, flatc.ExitCode);
 
-            flatc = Process.Start("flatc.exe", $"--csharp {tablePath}.fbs");
+            flatc = Process.Start("flatc.exe", $"-o {tempPath} --csharp {tablePath}.fbs");
             flatc.WaitForExit();
             Assert.AreEqual(0, flatc.ExitCode);
 
             // 컴파일
             File.Copy("Google.FlatBuffers.dll", $@"{Path.Combine(tempPath, "Google.FlatBuffers.dll")}", overwrite: true);
-            var compiler = new RuntimeCompiler();
-            var files = new string[] { $"{itemPath}.cs", $"{tablePath}.cs" };
-            var (tableType, itemType) = compiler.Compile(files, $"{name}", $"{name}_item");
+
+            var workingDirectory = Directory.GetCurrentDirectory();
+            var compiler = new RuntimeCompiler(workingDirectory);
+            var files = new string[]
+            {
+                Path.Combine(tempPath, $"{itemPath}.cs"),
+                Path.Combine(tempPath, $"{tablePath}.cs"),
+            };
+            compiler.Compile(files);
+
+            var tableType = compiler.GetType(name);
+            var itemType = compiler.GetType($"{name}_item");
             Assert.IsNotNull(itemType);
             Assert.IsNotNull(tableType);
 
