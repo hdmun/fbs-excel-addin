@@ -9,13 +9,23 @@ namespace Excel.AddIn
 {
     public partial class ThisAddIn
     {
+        public string MyLocation { get; private set; }
+
         public ConfigViewModel ConfigViewModel { get; set; } = new ConfigViewModel();
 
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
             Application.WorkbookBeforeSave += Application_WorkbookBeforeSave;
 
-            ConfigViewModel.Load();
+            //Get the assembly information
+            var assemblyInfo = Assembly.GetExecutingAssembly();
+
+            // CodeBase is the location of the ClickOnce deployment files
+            Uri uriCodeBase = new Uri(assemblyInfo.CodeBase);
+            MyLocation = Path.GetDirectoryName(uriCodeBase.LocalPath.ToString());
+
+            // ini 로드
+            ConfigViewModel.Load(MyLocation);
         }
 
         private void ThisAddIn_Shutdown(object sender, System.EventArgs e)

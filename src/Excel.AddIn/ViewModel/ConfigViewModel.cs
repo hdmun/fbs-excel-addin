@@ -8,7 +8,8 @@ namespace Excel.AddIn.ViewModel
 {
     public class ConfigViewModel
     {
-        private static readonly string FilePath = Path.Combine(Directory.GetCurrentDirectory(), "config.ini");
+        private static readonly string FileName = "config.ini";
+        private static string FilePath = string.Empty;
         private readonly IniFile _iniFile = new IniFile();
 
         private readonly ConfigModel _model = new ConfigModel();
@@ -16,8 +17,10 @@ namespace Excel.AddIn.ViewModel
         public List<string> ClassOutputPaths => _model.ClassOutputPaths;
         public List<string> BinaryOutputPaths => _model.BinaryOutputPaths;
 
-        public void Load()
+        public void Load(string rootPath)
         {
+            FilePath = Path.Combine(rootPath, FileName);
+
             if (false == File.Exists(FilePath))
                 using (var file = File.Create(FilePath)) { }
 
