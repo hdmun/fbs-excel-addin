@@ -18,6 +18,9 @@ namespace Excel.AddIn.ViewModel
 
         public void Load()
         {
+            if (false == File.Exists(FilePath))
+                using (var file = File.Create(FilePath)) { }
+
             _iniFile.Load(FilePath);
 
             if (_iniFile.TryGetSection("ClassOutput", out var section))
