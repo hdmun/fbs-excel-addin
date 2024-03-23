@@ -58,7 +58,7 @@ namespace Flatbuffer.Serializer.Schema
             }
 
             text.AppendLine("}");
-            text.AppendLine($"root_type {_name}_item");
+            text.AppendLine($"root_type {_name}_item;");
 
             return text.ToString();
         }
@@ -78,7 +78,7 @@ namespace Flatbuffer.Serializer.Schema
             text.AppendLine($"table {_name} {{");
             text.AppendLine($"  items : [{_name}_item];");
             text.AppendLine("}");
-            text.AppendLine($"root_type {_name}");
+            text.AppendLine($"root_type {_name};");
 
             return text.ToString();
         }
