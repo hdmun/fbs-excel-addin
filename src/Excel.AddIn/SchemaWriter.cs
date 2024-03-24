@@ -33,8 +33,14 @@ namespace Excel.AddIn
             File.WriteAllText(schemaPath, text);
 
             // 클래스 파일 출력
-            var flatc = Path.Combine(WorkingDirectory, "flatc.exe");
-            Process.Start(flatc, $"-o {OutputDirectory} --{language} {schemaPath}");
+            var procStartInfo = new ProcessStartInfo()
+            {
+                FileName = Path.Combine(WorkingDirectory, "flatc.exe"),
+                Arguments = $"-o {OutputDirectory} --{language} {schemaPath}",
+                WindowStyle = ProcessWindowStyle.Hidden,
+                CreateNoWindow = true
+            };
+            Process.Start(procStartInfo);
 
             return Path.Combine(OutputDirectory, fileName);
         }
