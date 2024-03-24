@@ -37,6 +37,13 @@ namespace Excel.AddIn
 
         private void Application_WorkbookBeforeSave(Workbook workbook, bool saveAsUI, ref bool cancel)
         {
+            var outputPath = ConfigViewModel.BinaryOutputPaths;
+            if (false == outputPath.Any())
+            {
+                MessageBox.Show("저장 경로가 세팅되어있지 않아 저장하지 않습니다.");
+                return;
+            }
+
             var worksheet = workbook.ActiveSheet as Worksheet;
 
             var reader = new SchemaReader(worksheet);
@@ -69,8 +76,12 @@ namespace Excel.AddIn
             var tableRows = reader.ReadRowAll();
 
             // 직렬화
-            var serializer = new Serializer(tableType, itemType);
-            serializer.Serialize(tableRows.ToArray());
+            foreach (var path in outputPath)
+            {
+                var serializer = new Serializer(tableType, itemType);
+                serializer.OutputDirectory = path;
+                serializer.Serialize(tableRows.ToArray());
+            }
         }
 
         #region VSTO에서 생성한 코드

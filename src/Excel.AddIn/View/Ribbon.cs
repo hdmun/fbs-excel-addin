@@ -3,6 +3,8 @@ using Flatbuffer.Serializer;
 using Microsoft.Office.Interop.Excel;
 using Microsoft.Office.Tools.Ribbon;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 
 namespace Excel.AddIn
 {
@@ -15,6 +17,13 @@ namespace Excel.AddIn
 
         private void btnCreateClassFile_Click(object sender, RibbonControlEventArgs e)
         {
+            var classOutputPath = Globals.ThisAddIn.ConfigViewModel.ClassOutputPaths;
+            if (false == classOutputPath.Any())
+            {
+                MessageBox.Show("클래스 파일 출력 경로를 설정해주세요");
+                return;
+            }
+
             var workbook = Globals.ThisAddIn.Application.ActiveWorkbook;
             var worksheet = workbook.ActiveSheet as Worksheet;
 
@@ -23,13 +32,16 @@ namespace Excel.AddIn
             var flatbuffTable = reader.ReadColumns();
 
             // 플랫버퍼 스키마 파일 만들고 클래스 파일 생성
-            // TODO : 환경 설정에서 옵션 설정할 수 있게 하자
-            var writer = new SchemaWriter()
+            // 단순하게 루프 돌리자
+            foreach (var path in classOutputPath)
             {
-                WorkingDirectory = Globals.ThisAddIn.MyLocation,
-                OutputDirectory = Path.GetTempPath()
-            };
-            writer.Write(flatbuffTable, CompileLanguage.csharp);
+                var writer = new SchemaWriter()
+                {
+                    WorkingDirectory = Globals.ThisAddIn.MyLocation,
+                    OutputDirectory = path,
+                };
+                writer.Write(flatbuffTable, CompileLanguage.csharp);
+            }
         }
 
         private void btnSettings_Click(object sender, RibbonControlEventArgs e)

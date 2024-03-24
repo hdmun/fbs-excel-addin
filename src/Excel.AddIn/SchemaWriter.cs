@@ -27,8 +27,9 @@ namespace Excel.AddIn
 
         private string WriteInternal(string fileName, string text, CompileLanguage language)
         {
-            // 스키마 파일 생성
-            var schemaPath = Path.Combine(OutputDirectory, $"{fileName}.fbs");
+            // 스키마 파일은 임시 폴더에 생성
+            var tempPath = Path.GetTempPath();
+            var schemaPath = Path.Combine(tempPath, $"{fileName}.fbs");
             File.WriteAllText(schemaPath, text);
 
             // 클래스 파일 출력

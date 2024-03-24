@@ -14,6 +14,8 @@ namespace Flatbuffer.Serializer
         private readonly Type _fbTableClassType;
         private readonly Type _fbItemClassType;
 
+        public string OutputDirectory { get; set; } = string.Empty;
+
         public Serializer(Type fbTableClassType, Type fbItemClassType)
         {
             _fbTableClassType = fbTableClassType;
@@ -84,9 +86,9 @@ namespace Flatbuffer.Serializer
             builder.Finish((int)offsetValue);
 
             // 바이트 바이너리 파일로 출력
-            // TODO : path 설정이 필요할 듯?
             var writeBytes = builder.DataBuffer.ToSizedArray();
-            File.WriteAllBytes($"{_fbTableClassType.Name}.fb", writeBytes);
+            var path = Path.Combine(OutputDirectory, $"{_fbTableClassType.Name}.fb");
+            File.WriteAllBytes(path, writeBytes);
         }
     }
 }
