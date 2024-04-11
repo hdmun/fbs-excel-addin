@@ -1,5 +1,7 @@
 ﻿using Excel.AddIn.Feature;
 using Excel.AddIn.Model;
+using Flatbuffer.Serializer;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -16,6 +18,7 @@ namespace Excel.AddIn.ViewModel
 
         public List<string> ClassOutputPaths => _model.ClassOutputPaths;
         public List<string> BinaryOutputPaths => _model.BinaryOutputPaths;
+        public Dictionary<CompileLanguage, bool> Lanaguage => _model.Lanaguage;
 
         public void Load(string rootPath)
         {
@@ -35,6 +38,17 @@ namespace Excel.AddIn.ViewModel
             {
                 _model.BinaryOutputPaths = section.Select(x => x.Value.ToString()).ToList();
             }
+
+            if (_iniFile.TryGetSection("FlatcLanguage", out section))
+            {
+                _model.Lanaguage = section
+                    .Where(x => Enum.TryParse<CompileLanguage>(x.Key, ignoreCase: true, out _))
+                    .ToDictionary(
+                        x => Enum.TryParse<CompileLanguage>(x.Key, ignoreCase: true, out var result)
+                            ? result
+                            : CompileLanguage.grpc,
+                        x => x.Value.ToBool());
+            }
         }
 
         public void Save()
@@ -53,7 +67,19 @@ namespace Excel.AddIn.ViewModel
             }
             _iniFile["BinaryOutput"] = section;
 
+            section = new IniSection();
+            foreach (var keyValuePair in _model.Lanaguage)
+            {
+                section[$"{keyValuePair.Key}"] = keyValuePair.Value;
+            }
+            _iniFile["FlatcLanguage"] = section;
+
             _iniFile.Save(FilePath);
+        }
+
+        public void UpdateCompileOption(CompileLanguage language, bool check)
+        {
+            _model.Lanaguage[language] = check;
         }
 
         public bool AddClassOutputPath(string path)
