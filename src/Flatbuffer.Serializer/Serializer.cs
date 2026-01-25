@@ -25,13 +25,6 @@ namespace Flatbuffer.Serializer
         public void Serialize(IEnumerable<FlatBufferTableRow> rows)
         {
             // 직렬화에 사용할 메소드 가져오기
-            var fieldMethods = _fbTableClassType
-                .GetMethods(BindingFlags.Public | BindingFlags.Static)
-                .Where(x => x.Name.Contains("Add"))
-                .ToDictionary(
-                    x => x.Name.Replace("Add", "").ToLower(),
-                    x => x
-                );
             var createItemMethod = _fbItemClassType.GetMethod($"Create{_fbItemClassType.Name}");
 
             var builder = new FlatBufferBuilder(1);

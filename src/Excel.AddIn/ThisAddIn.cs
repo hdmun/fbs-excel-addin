@@ -73,7 +73,7 @@ namespace Excel.AddIn
             var itemType = compiler.GetType($"{flatbuffTable.Name}_item");
 
             // 전체 행 데이터 읽기
-            var tableRows = reader.ReadRowAll();
+            var tableRows = reader.ReadRowAll(flatbuffTable);
 
             // 직렬화
             foreach (var path in outputPath)

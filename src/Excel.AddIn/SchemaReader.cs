@@ -49,7 +49,7 @@ namespace Excel.AddIn
             return flatBufferTable;
         }
 
-        public List<FlatBufferTableRow> ReadRowAll()
+        public List<FlatBufferTableRow> ReadRowAll(FlatBufferTable table)
         {
             // find headear signature
             var header = _worksheet.Cells.Find("#scheme");
@@ -65,9 +65,11 @@ namespace Excel.AddIn
             var startColumn = header.Column;
             Range headers = _worksheet.UsedRange.Rows[header.Row, Type.Missing];
             int columnCount = headers.Columns.Count;
+            var fields = table.Fields.ToList();
+
             for (int row = startRow; true; row++)
             {
-                var tableRow = ReadRowInternal(headers, row, startColumn, columnCount);
+                var tableRow = ReadRowInternal(fields, row, startColumn, columnCount);
 
                 // 비어있는 행이면 읽기 중단
                 if (tableRow.IsEmpty())
@@ -79,16 +81,22 @@ namespace Excel.AddIn
             return rows;
         }
 
-        private FlatBufferTableRow ReadRowInternal(Range headers, int row, int col, int colCount)
+        private FlatBufferTableRow ReadRowInternal(List<FlatBufferTableField> fields, int row, int col, int colCount)
         {
             var tableRow = new FlatBufferTableRow();
             // 컬럼을 증가시키면서 셀 데이터 읽기
-            foreach (var column in Enumerable.Range(col, colCount))
+            for(int i = 0; i < fields.Count; i++)
             {
+                var field = fields[i];
+                var column = col + i;
                 var cell = _worksheet.Cells[row, column];
-                var cellValue = cell.Value2 as string;
+                // cell.Value2 can be double for numbers, string for strings, or bool.
+                // We need to handle this conversion safely.
+                // Assuming everything comes as string or convertible to string for now since Parse handles strings.
+                // But Value2 returns double for numbers.
+                var cellValue = Convert.ToString(cell.Value2); 
 
-                tableRow.Add("", cellValue);
+                tableRow.Add(field.Type, cellValue);
             }
 
             return tableRow;

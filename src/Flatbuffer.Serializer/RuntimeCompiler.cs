@@ -26,7 +26,7 @@ namespace Flatbuffer.Serializer
             var parameters = new CompilerParameters();
 
             parameters.GenerateInMemory = true;
-            parameters.ReferencedAssemblies.Add(Path.Combine(_workingDirectory, "Google.FlatBuffers.dll"));
+            parameters.ReferencedAssemblies.Add(typeof(Google.FlatBuffers.FlatBufferBuilder).Assembly.Location);
 
             // 코드 컴파일
             var results = provider.CompileAssemblyFromFile(parameters, files);

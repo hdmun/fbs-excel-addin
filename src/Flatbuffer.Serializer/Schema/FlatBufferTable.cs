@@ -10,6 +10,7 @@ namespace Flatbuffer.Serializer.Schema
         private readonly List<FlatBufferTableField> _fields;
 
         public string Name => _name;
+        public IEnumerable<FlatBufferTableField> Fields => _fields;
 
         public FlatBufferTable(string name)
         {

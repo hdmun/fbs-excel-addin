@@ -11,10 +11,10 @@ namespace Flatbuffer.Serializer.Schema
             {
                 // TODO : 네이밍만 다른 겹치는 자료형이 있어 제한해서 사용할 필요는 있을듯
                 // 당장 생각나는 구조가 이거 밖에 떠오르지 않았다
-                { "int8", (value) => byte.Parse(value) },
-                { "uint8", (value) => sbyte.Parse(value) },
-                { "byte", (value) => byte.Parse(value) },
-                { "ubyte", (value) => sbyte.Parse(value) },
+                { "int8", (value) => sbyte.Parse(value) },
+                { "uint8", (value) => byte.Parse(value) },
+                { "byte", (value) => sbyte.Parse(value) },
+                { "ubyte", (value) => byte.Parse(value) },
                 { "bool", (value) => bool.Parse(value) },
                 { "int16", (value) => short.Parse(value) },
                 { "uint16", (value) => ushort.Parse(value) },
